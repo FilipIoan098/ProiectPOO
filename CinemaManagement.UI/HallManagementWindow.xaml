@@ -1,0 +1,65 @@
+﻿<Window x:Class="CinemaManagement.UI.Views.HallManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hall Management" Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen" Background="#0d1117">
+
+    <Window.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#238636"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6" 
+                               Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Hall Management" FontSize="24" 
+                  FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>
+
+        <DataGrid Grid.Row="1" x:Name="HallsDataGrid" AutoGenerateColumns="False"
+                 Background="#161b22" Foreground="White" BorderThickness="0"
+                 RowBackground="#21262d" AlternatingRowBackground="#161b22"
+                 GridLinesVisibility="None" HeadersVisibility="Column"
+                 SelectionMode="Single" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="120"/>
+                <DataGridTextColumn Header="Rows" Binding="{Binding Rows}" Width="80"/>
+                <DataGridTextColumn Header="Seats/Row" Binding="{Binding SeatsPerRow}" Width="100"/>
+                <DataGridTextColumn Header="Total Seats" Binding="{Binding TotalSeats}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,20,0,0">
+            <Button Content="➕ Add Hall" Click="AddHall_Click" 
+                   Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
+            <Button Content="🔄 Refresh" Click="Refresh_Click"
+                   Style="{StaticResource ActionButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

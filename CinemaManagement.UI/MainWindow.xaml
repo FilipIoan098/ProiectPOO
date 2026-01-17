@@ -1,0 +1,160 @@
+﻿<Window x:Class="CinemaManagement.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cinema Management System - Welcome"
+        Height="600" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#1a1a2e">
+
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="WelcomeButton" TargetType="Button">
+            <Setter Property="Background" Value="#0f3460"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="40,15"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#16213e"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                           To="1.05" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                           To="1.05" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                           To="1.0" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                           To="1.0" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Background gradient effect -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1a1a2e" Offset="0"/>
+                <GradientStop Color="#16213e" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Main Content -->
+        <Border Background="#16213e"
+                CornerRadius="20"
+                Margin="0,10,10,30"
+                Padding="40">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" 
+                                BlurRadius="30" 
+                                ShadowDepth="0" 
+                                Opacity="0.5"/>
+            </Border.Effect>
+
+            <StackPanel VerticalAlignment="Center">
+
+                <!-- Cinema Icon with Animation -->
+                <Viewbox Width="100" Height="100" Margin="0,0,0,20">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="#e94560" Data="M18,3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3H18z M8,17H6v-2h2V17z M8,13H6v-2h2V13z M8,9H6V7h2V9z M18,17h-2v-2h2V17z M18,13h-2v-2h2V13z M18,9h-2V7h2V9z" HorizontalAlignment="Center" Canvas.Top="3" VerticalAlignment="Top">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="IconRotation" CenterX="12" CenterY="12"/>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Canvas>
+                </Viewbox>
+
+                <!-- Welcome Title -->
+                <TextBlock Text="WELCOME TO"
+                          FontSize="20"
+                          FontWeight="Normal"
+                          Foreground="#94a3b8"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,5"/>
+
+                <TextBlock Text="CINEMA"
+                          FontSize="42"
+                          FontWeight="Bold"
+                          Foreground="#e94560"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,5"/>
+
+                <TextBlock Text="Management System"
+                          FontSize="18"
+                          Foreground="#94a3b8"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,40"/>
+
+                <!-- Welcome Message -->
+                <TextBlock Text="Your Gateway to Seamless Cinema Operations"
+                          FontSize="14"
+                          Foreground="#cbd5e1"
+                          TextAlignment="Center"
+                          TextWrapping="Wrap"
+                          Margin="0,0,0,30"
+                          LineHeight="22"/>
+
+                <!-- Buttons Stack -->
+                <StackPanel>
+                    <!-- Login Button -->
+                    <Button Content="🎬 LOGIN"
+                           Style="{StaticResource WelcomeButton}"
+                           Click="LoginButton_Click"
+                           RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <ScaleTransform/>
+                        </Button.RenderTransform>
+                    </Button>
+
+                    <!-- Register Button -->
+                    <Button Content="✨ REGISTER"
+                           Style="{StaticResource WelcomeButton}"
+                           Background="#238636"
+                           Click="RegisterButton_Click"
+                           RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <ScaleTransform/>
+                        </Button.RenderTransform>
+                    </Button>
+                </StackPanel>
+
+                <!-- Footer Text -->
+                <TextBlock Text="Experience the Future of Cinema Management"
+                          Foreground="#475569"
+                          FontSize="12"
+                          HorizontalAlignment="Center"
+                          Margin="0,40,0,0"
+                          FontStyle="Italic"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
