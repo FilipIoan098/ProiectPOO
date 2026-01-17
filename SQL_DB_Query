@@ -1,0 +1,82 @@
+-- Cinema Management System Database Schema
+
+CREATE DATABASE IF NOT EXISTS cinema_db;
+USE cinema_db;
+
+-- Users Table
+CREATE TABLE IF NOT EXISTS Users (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Username VARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash TEXT NOT NULL,
+    Role INT NOT NULL,
+    CreatedAt DATETIME NOT NULL
+);
+
+-- Movies Table
+CREATE TABLE IF NOT EXISTS Movies (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Title VARCHAR(200) NOT NULL,
+    Genre VARCHAR(50),
+    DurationMinutes INT NOT NULL,
+    Rating DECIMAL(3,1) NOT NULL,
+    IsActive TINYINT(1) NOT NULL,
+    CreatedAt DATETIME NOT NULL
+);
+
+-- Halls Table
+CREATE TABLE IF NOT EXISTS Halls (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Type INT NOT NULL,
+    TotalSeats INT NOT NULL,
+    TotalRows INT NOT NULL,
+    SeatsPerRow INT NOT NULL,
+    CreatedAt DATETIME NOT NULL
+);
+
+-- Screenings Table
+CREATE TABLE IF NOT EXISTS Screenings (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    MovieId INT NOT NULL,
+    HallId INT NOT NULL,
+    ShowDateTime DATETIME NOT NULL,
+    BasePrice DECIMAL(10,2) NOT NULL,
+    Type INT NOT NULL,
+    CreatedAt DATETIME NOT NULL,
+    FOREIGN KEY (MovieId) REFERENCES Movies(Id),
+    FOREIGN KEY (HallId) REFERENCES Halls(Id)
+);
+
+-- Reservations Table
+CREATE TABLE IF NOT EXISTS Reservations (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    UserId INT NOT NULL,
+    ScreeningId INT NOT NULL,
+    SeatNumbers TEXT NOT NULL,
+    TotalPrice DECIMAL(10,2) NOT NULL,
+    Status INT NOT NULL,
+    BookedAt DATETIME NOT NULL,
+    CancelledAt DATETIME,
+    FOREIGN KEY (UserId) REFERENCES Users(Id),
+    FOREIGN KEY (ScreeningId) REFERENCES Screenings(Id)
+);
+
+-- Insert Default Admin (password: admin123, hashed with SHA256)
+INSERT INTO Users (Username, PasswordHash, Role, CreatedAt) VALUES
+('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 0, NOW());
+
+-- Insert Test User (password: user123, hashed with SHA256)
+INSERT INTO Users (Username, PasswordHash, Role, CreatedAt) VALUES
+('user', 'BPiZbadjt6lpsQKO4wB1aerzpjVIbdqyEdUSyFud+Ps=', 1, NOW());
+
+-- Sample Movie Data
+INSERT INTO Movies (Title, Genre, DurationMinutes, Rating, IsActive, CreatedAt) VALUES
+('The Matrix', 'Sci-Fi', 136, 4.8, 1, NOW()),
+('Inception', 'Thriller', 148, 4.9, 1, NOW()),
+('The Dark Knight', 'Action', 152, 4.9, 1, NOW());
+
+-- Sample Hall Data
+INSERT INTO Halls (Name, Type, TotalSeats, TotalRows, SeatsPerRow, CreatedAt) VALUES
+('Hall A', 0, 120, 10, 12, NOW()),
+('Hall B IMAX', 1, 150, 10, 15, NOW()),
+('Hall C 3D', 2, 100, 10, 10, NOW());
